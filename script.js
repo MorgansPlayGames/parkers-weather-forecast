@@ -10,7 +10,33 @@ $( document ).ready(function(){
         url: queryURL,
         method: "GET"
       })
-        .then(function(response) {
-            console.log(response);
+        .then(function(city) {
+            console.log(city);
+            updateDOM(city);
+            //city-name
+
+            //city-temperature
+            //city-humidity
+            //city-wind-speed
+            //city-UV-index
         });
+    function updateDOM(city){
+        var cityName = city.name;
+        var cityTemp = toFahrenheit(city.main.temp);
+        var cityHumidity = city.main.humidity;
+        var cityWindSpeed = city.wind.speed;
+        var cityUV = 'gotta find this...';
+        console.log(cityName, cityTemp, cityHumidity, cityWindSpeed, cityUV);
+        $('#city-name').text(cityName);
+        $('#city-temperature').text('Temperature: ' + cityTemp);
+        $('#city-humidity').text('Wind Speed: ' + cityHumidity);
+        $('#city-wind-speed').text('Wind Speed: ' + cityWindSpeed);
+        $('#city-UV-index').text('UV Index: ' + cityUV);
+
+    }
+
+    function toFahrenheit(kelvin){
+        var fahrenheit = (kelvin - 273.15)*9/5+32;
+        return fahrenheit;
+    }
 })
