@@ -16,20 +16,20 @@
     <!-- Top of page -->
     <header>The Weather</header>
     
-    <div class ="container row">
+    <div class ='container row'>
         <!-- Page Left -->
-        <nav class = "col-md-3">
+        <nav class = 'col-md-3'>
             <!-- SearchBar -->
             <div>
                 <p>Search for a city</p>
-                <input type="text">
-                <button>Search</button>
+                <input type='text' id='searchText'>
+                <button id = 'searchBtn'>Search</button>
             </div>
             <!-- Search History -->
             <div>List of Cities</div>
         </nav>
         <!-- Right of Page -->
-        <main class = "col-md-9">
+        <main class = 'col-md-9'>
             <!-- City details -->
             <section>
                 <!-- Name of City -->
@@ -44,13 +44,7 @@
                 <p id = 'city-UV-index'>UV Index:</p>
             </section>
             <!-- 5 day forcast -->
-            <section class = 'row'>
-                <section class = "col-md">Today</section>
-                <section class = "col-md">Tomorrow</section>
-                <section class = "col-md">day after</section>
-                <section class = "col-md">day after</section>
-                <section class = "col-md">day after</section>
-            </section>
+            <section id='forecast' class='row'></section>
         </main>
     </div>
     <script src='script.js'></script>
