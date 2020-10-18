@@ -1,7 +1,7 @@
 # parkers-weather-forecast
 Goal: Search a city and get the weather from there in a nice to read format
 
-Site: https://morgansplaygames.github.io/parkers-weather-forecast/g
+Site: https://morgansplaygames.github.io/parkers-weather-forecast/
 
 * added basic layout
 * added SLC as base search city
