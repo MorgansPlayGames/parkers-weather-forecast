@@ -3,27 +3,74 @@
 
 $( document ).ready(function(){
     //key and base url to call from
+    //console.log(JSON.parse(localStorage.getItem('cityList')));
+    var cityList = localStorage.getItem('cityList');
+    cityList = JSON.parse(cityList);
     var key = "5317e61e885d4cdc785b84fe43c9f84d";
     var cityName = "Salt Lake City";
     var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+key;
 
+    updateCityList();
 
+    //Clicking search button
     $('#searchBtn').on('click', function(){
         cityName = $('#searchText').val()
         queryURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+key;
-        console.log(cityName);
         searchCity();
+        
     });
-    //get weather info
+
+    function saveCity(){
+        var onList;
+        if(cityList === null){
+            cityList = [cityName, ];
+            localStorage.setItem('cityList', [JSON.stringify(cityList)]);
+        }else{
+            //check to see if cityName is on the list
+            console.log('why am I here?')
+            onList = false;
+            cityList.forEach(function(i){
+                if(cityName === cityList[i]){
+                    onList=true;
+                }
+            });
+            //if false push to list
+            if(onList === false){
+                cityList.push(cityName);
+                //if greater than 7, remove from list a city
+                if(cityList.length > 7){
+                    console.log('too Many cities');
+                }
+                localStorage.setItem('cityList', [JSON.stringify(cityList)]);
+            }
+        }
+        updateCityList();
+    }
+
+    function updateCityList(){
+        $('#cityList').empty();
+        console.log(cityList);
+        if(cityList){
+            cityList.forEach(function(name){
+                cityButton = $('<button>').text(name).attr('data-name', name).attr('class', 'cityBtn');
+                $('#cityList').append(cityButton);
+                console.log('please update me');
+            
+            })
+        }
+    }
+    //get weather info to pass to Dom update functions 
     function searchCity(){
     $.ajax({
         url: queryURL,
         method: "GET"
       })
         .then(function(city) {
+            //save the city in the nav as a valid place
+            saveCity();
             //push info to be populated
             updateDOM(city);
-            //get location for the UV index
+            //get location for the UV index and 5 day forecast
             var lat = city.coord.lat;
             var lon = city.coord.lon;
             var uvURL = 'http://api.openweathermap.org/data/2.5/uvi?lat='+lat+'&lon='+lon+'&appid='+key;
@@ -48,7 +95,6 @@ $( document ).ready(function(){
     }
         //populate the dom with the main ajax call: name temp humidity windspeed
     function updateDOM(city){
-        console.log(city);
         $('#city-name').text(city.name +' '+ convertDate(city.dt));
         $('#city-temperature').text('Temperature: ' + toFahrenheit(city.main.temp));
         $('#city-humidity').text('Humidity: ' + city.main.humidity);
@@ -63,7 +109,6 @@ $( document ).ready(function(){
         $('#forecast').empty();
         for(var i = 0; i<5; i++){
             var dayOfEl = convertDate(forecast[i+1].dt)
-            console.log(forecast[i+1])
             var weatherIcon = getWeatherIcon(forecast[i+1].weather[0].icon);
             var weatherAlt = forecast[i+1].weather[0].description;
             var temp = toFahrenheit(forecast[i+1].temp.day);
