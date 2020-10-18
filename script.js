@@ -29,8 +29,8 @@ $( document ).ready(function(){
             //check to see if cityName is on the list
             console.log('why am I here?')
             onList = false;
-            cityList.forEach(function(i){
-                if(cityName === cityList[i]){
+            cityList.forEach(function(name){
+                if(cityName === name){
                     onList=true;
                 }
             });
