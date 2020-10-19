@@ -19,7 +19,11 @@ $( document ).ready(function(){
         searchCity();
         
     });
-
+    $('#cityList').on('click', '.cityBtn', function(){
+        cityName = $(this)[0].getAttribute('data-name');
+        queryURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+key;
+        searchCity();
+    });
     function saveCity(){
         var onList;
         if(cityList === null){
@@ -73,7 +77,7 @@ $( document ).ready(function(){
             //get location for the UV index and 5 day forecast
             var lat = city.coord.lat;
             var lon = city.coord.lon;
-            var uvURL = 'http://api.openweathermap.org/data/2.5/uvi?lat='+lat+'&lon='+lon+'&appid='+key;
+            var uvURL = 'https://api.openweathermap.org/data/2.5/uvi?lat='+lat+'&lon='+lon+'&appid='+key;
             //UV index call
             $.ajax({
                 url: uvURL,
@@ -139,7 +143,7 @@ $( document ).ready(function(){
     }
 
     function getWeatherIcon(iconId){
-        iconURL = 'http://openweathermap.org/img/wn/'+iconId+'@2x.png';
+        iconURL = 'https://openweathermap.org/img/wn/'+iconId+'@2x.png';
         return iconURL
     }
 });
