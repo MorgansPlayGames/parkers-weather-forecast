@@ -15,9 +15,4 @@ Site: https://morgansplaygames.github.io/parkers-weather-forecast/
 * added search history
 * added color to the UV index
 * added last searched city to be first updated to dom
-
-Needs:
-* WHEN I reload the page
-THEN I am presented a list starting with the last city to the first
-* WHEN I view the page
-THEN I am presented with a page with color, formatted titles, and formatted text.
+* added bootstrap components

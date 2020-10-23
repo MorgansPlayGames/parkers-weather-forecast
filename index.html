@@ -13,35 +13,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
 </head>
 <body>
+    <div class ='container-fluid bg-dark'
     <!-- Top of page -->
-    <header>The Weather</header>
+    <header>
+        <h2 class = "text-center display-2 text-primary">The Weather</h2>
+    </header>
     
     <div class ='container row'>
         <!-- Page Left -->
-        <nav class = 'col-md-3'>
+        <nav class = 'col-md-3 p-1 bg-secondary text-light'>
             <!-- SearchBar -->
             <div>
-                <p>Search for a city</p>
-                <input type='text' id='searchText'>
-                <button id = 'searchBtn'>Search</button>
+                <h5>Search for a city</h5>
+                <input class = 'mr-2' type='text' id='searchText'>
+                <button class = 'btn btn-outline-primary btn-dark m-1' id = 'searchBtn'>Search</button>
             </div>
             <!-- Search History -->
-            <div id='cityList'>List of Cities</div>
+            <div id='cityList' class = 'mr-3'>List of Cities</div>
         </nav>
         <!-- Right of Page -->
-        <main class = 'col-md-9'>
+        <main class = 'col-md-9 p-1 bg-dark text-light'>
             <!-- City details -->
             <section>
                 <!-- Name of City -->
-                <header id = 'city-name'>City Name</header>
+                <header id = 'city-name' class = 'h2'>City Name</header>
                 <!-- Temp -->
-                <p id = 'city-temperature'>Temperature:</p>
+                <p id = 'city-temperature' class = 'h4'>Temperature:</p>
                 <!-- Humidity -->
-                <p id = 'city-humidity'>Humidity:</p>
+                <p id = 'city-humidity' class = 'h6'>Humidity:</p>
                 <!-- WindSpeed -->
-                <p id = 'city-wind-speed'>Wind Speed:</p>
+                <p id = 'city-wind-speed' class = 'h6'>Wind Speed:</p>
                 <!-- UV Index -->
-                <p id = 'city-UV-index'>UV Index:</p>
+                <p id = 'city-UV-index' class = 'h4'>UV Index:</p>
             </section>
             <!-- 5 day forcast -->
             <section id='forecast' class='row'></section>

@@ -2,8 +2,6 @@
 // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 
 $( document ).ready(function(){
-    //key and base url to call from
-    //console.log(JSON.parse(localStorage.getItem('cityList')));
     var cityList = localStorage.getItem('cityList');
     cityList = JSON.parse(cityList);
     var key = "5317e61e885d4cdc785b84fe43c9f84d";
@@ -11,7 +9,7 @@ $( document ).ready(function(){
     var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+key;
 
     updateCityList();
-
+    lastCitySearched();
     //Clicking search button
     $('#searchBtn').on('click', function(){
         cityName = $('#searchText').val()
@@ -19,15 +17,17 @@ $( document ).ready(function(){
         searchCity();
         
     });
+    //listener to the city button div containing all the searched cities.
     $('#cityList').on('click', '.cityBtn', function(){
         cityName = $(this)[0].getAttribute('data-name');
         queryURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+key;
         searchCity();
     });
+    //checks to see if on the list if not on the list push to list save to local storage
     function saveCity(){
         var onList;
         if(cityList === null){
-            cityList = [cityName, ];
+            cityList = [cityName];
             localStorage.setItem('cityList', [JSON.stringify(cityList)]);
         }else{
             //check to see if cityName is on the list
@@ -50,17 +50,17 @@ $( document ).ready(function(){
         }
         updateCityList();
     }
-
+    //Creates buttons for each of the last searched
     function updateCityList(){
         $('#cityList').empty();
         console.log(cityList);
         if(cityList){
             cityList.forEach(function(name){
-                cityButton = $('<button>').text(name).attr('data-name', name).attr('class', 'cityBtn');
+                cityButton = $('<button>').text(name).attr('data-name', name).attr('class', 'cityBtn btn btn-outline-primary btn-dark btn-block m-1');
                 $('#cityList').append(cityButton);
                 console.log('please update me');
             
-            })
+            });
         }
     }
     //get weather info to pass to Dom update functions 
@@ -106,9 +106,25 @@ $( document ).ready(function(){
     }
     //populate the dom with UV index
     function updateUV(index){
-        $('#city-UV-index').text('UV Index: ' + index);
-    }
 
+        $('#city-UV-index').text('UV Index: ' + index);
+        if(index <= 2){
+            $('#city-UV-index').attr('class', 'bg-info');
+        }
+        if(index >2 && index <= 5){
+            $('#city-UV-index').attr('class', 'bg-success');
+        }
+        if(index >5 && index <= 7){
+            $('#city-UV-index').attr('class', 'bg-warning');
+        }
+        if(index >8 && index <= 10){
+            $('#city-UV-index').attr('class', 'bg-danger');
+        }
+        if(index > 10){
+            $('#city-UV-index').attr('class', 'bg-info');
+        }
+    }
+    //update the 5 day forecast create 5 card divs. Recieves date, the weather icon, the tempurature in kelvin, and humidity. It appends it to the DOM.
     function updateForecast(forecast){
         $('#forecast').empty();
         for(var i = 0; i<5; i++){
@@ -117,9 +133,9 @@ $( document ).ready(function(){
             var weatherAlt = forecast[i+1].weather[0].description;
             var temp = toFahrenheit(forecast[i+1].temp.day);
             var humidity = forecast[i+1].humidity;
-            var dayCard = $('<div>').addClass('card col text-white bg-primary');
-            var dateEl = $('<p>').addClass('row').text(dayOfEl);
-            var weatherImgEl = $('<img>').addClass('row').attr('src', weatherIcon).attr('alt', weatherAlt);
+            var dayCard = $('<div>').addClass('card col text-white bg-primary m-1');
+            var dateEl = $('<p>').addClass('text-center card-title row').text(dayOfEl);
+            var weatherImgEl = $('<img>').addClass('row img-fluid').attr('src', weatherIcon).attr('alt', weatherAlt);
             tempEl = $('<p>').addClass('row').text('Temp: ' + temp);
             humidityEl = $('<p>').addClass('row').text('Humidity: '+ humidity+'%');
             dayCard.append(dateEl);
@@ -135,15 +151,26 @@ $( document ).ready(function(){
         var fahrenheit = parseInt((kelvin - 273.15)*9/5+32);
         return fahrenheit;
     }
-
+    //Function to convert a date value to a month / day / year string
     function convertDate(dayOfEl){
         var date = new Date(dayOfEl*1000);
         forecastDay =  date.getMonth()+'/'+ date.getDate() +'/'+ date.getFullYear();
         return forecastDay;
     }
-
+    //Returns the url of the weather icon from the Id given
     function getWeatherIcon(iconId){
         iconURL = 'https://openweathermap.org/img/wn/'+iconId+'@2x.png';
         return iconURL
+    }
+    //Gets the last city cearched and updates dom to that city.
+    function lastCitySearched(){
+        if(cityList !== null){
+            var lastCity = cityList[cityList.length-1];
+            
+            cityName = lastCity;
+            queryURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+key;
+            console.log(cityName)
+            searchCity();
+        }
     }
 });
