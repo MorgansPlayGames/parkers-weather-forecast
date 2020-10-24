@@ -31,16 +31,20 @@ $( document ).ready(function(){
             localStorage.setItem('cityList', [JSON.stringify(cityList)]);
         }else{
             //check to see if cityName is on the list
-            console.log('why am I here?')
             onList = false;
+            var i=0;
             cityList.forEach(function(name){
+                
                 if(cityName === name){
+                    cityList.splice(i, 1);
                     onList=true;
+                    cityList.unshift(cityName);
                 }
+                i++;
             });
             //if false push to list
             if(onList === false){
-                cityList.push(cityName);
+                cityList.unshift(cityName);
                 //if greater than 7, remove from list a city
                 if(cityList.length > 7){
                     console.log('too Many cities');
@@ -165,7 +169,7 @@ $( document ).ready(function(){
     //Gets the last city cearched and updates dom to that city.
     function lastCitySearched(){
         if(cityList !== null){
-            var lastCity = cityList[cityList.length-1];
+            var lastCity = cityList[0];
             
             cityName = lastCity;
             queryURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+key;
@@ -173,4 +177,15 @@ $( document ).ready(function(){
             searchCity();
         }
     }
+    function capital_letter(str) 
+    {
+        str = str.split(" ");
+
+        for (var i = 0, x = str.length; i < x; i++) {
+            str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+        }
+
+        return str.join(" ");
+    }
+
 });
