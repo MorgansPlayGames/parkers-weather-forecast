@@ -35,7 +35,6 @@ $( document ).ready(function(){
             onList = false;
             var i=0;
             cityList.forEach(function(name){
-                
                 if(cityName === name){
                     cityList.splice(i, 1);
                     onList=true;
@@ -167,7 +166,6 @@ $( document ).ready(function(){
             
             cityName = lastCity;
             queryURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+key;
-            console.log(cityName)
             searchCity();
         }
     }
