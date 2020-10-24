@@ -16,3 +16,6 @@ Site: https://morgansplaygames.github.io/parkers-weather-forecast/
 * added color to the UV index
 * added last searched city to be first updated to dom
 * added bootstrap components
+* changed list save ordering 
+* deleted and resaved last search, so it appears as last search
+* Made capitalization not matter

@@ -26,6 +26,7 @@ $( document ).ready(function(){
     //checks to see if on the list if not on the list push to list save to local storage
     function saveCity(){
         var onList;
+        cityName = cityName.toLowerCase();
         if(cityList === null){
             cityList = [cityName];
             localStorage.setItem('cityList', [JSON.stringify(cityList)]);
@@ -45,10 +46,6 @@ $( document ).ready(function(){
             //if false push to list
             if(onList === false){
                 cityList.unshift(cityName);
-                //if greater than 7, remove from list a city
-                if(cityList.length > 7){
-                    console.log('too Many cities');
-                }
                 localStorage.setItem('cityList', [JSON.stringify(cityList)]);
             }
         }
@@ -57,13 +54,10 @@ $( document ).ready(function(){
     //Creates buttons for each of the last searched
     function updateCityList(){
         $('#cityList').empty();
-        console.log(cityList);
         if(cityList){
             cityList.forEach(function(name){
-                cityButton = $('<button>').text(name).attr('data-name', name).attr('class', 'cityBtn btn btn-outline-primary btn-dark btn-block m-1');
+                cityButton = $('<button>').text(name).attr('data-name', name).attr('class', 'cityBtn btn btn-outline-primary btn-dark btn-block m-1 text-capitalize');
                 $('#cityList').append(cityButton);
-                console.log('please update me');
-            
             });
         }
     }
@@ -166,7 +160,7 @@ $( document ).ready(function(){
         iconURL = 'https://openweathermap.org/img/wn/'+iconId+'@2x.png';
         return iconURL
     }
-    //Gets the last city cearched and updates dom to that city.
+    //Gets the last city searched and updates dom to that city.
     function lastCitySearched(){
         if(cityList !== null){
             var lastCity = cityList[0];
@@ -177,15 +171,6 @@ $( document ).ready(function(){
             searchCity();
         }
     }
-    function capital_letter(str) 
-    {
-        str = str.split(" ");
-
-        for (var i = 0, x = str.length; i < x; i++) {
-            str[i] = str[i][0].toUpperCase() + str[i].substr(1);
-        }
-
-        return str.join(" ");
-    }
+    
 
 });
