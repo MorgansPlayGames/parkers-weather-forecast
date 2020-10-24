@@ -3,6 +3,8 @@ Goal: Search a city and get the weather from there in a nice to read format
 
 Site: https://morgansplaygames.github.io/parkers-weather-forecast/
 
+[!image]Screenshot.png 
+
 * added basic layout
 * added SLC as base search city
 * connected to openweatherapi to get weather information
